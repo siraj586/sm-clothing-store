@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
@@ -24,9 +25,12 @@ const Hero = () => {
               <p className="text-gray-600 max-w-md">
                 Get Free Shipping on orders over $50. Discover the latest trends in men's fashion today.
               </p>
-              <button className="mt-4 bg-black text-white px-8 py-3 rounded-full font-semibold hover:bg-gray-800 transition-colors duration-300">
+              <Link
+                to="/all-products"
+                className="mt-4 inline-flex items-center justify-center bg-black text-white px-8 py-3 rounded-full font-semibold hover:bg-gray-800 transition-colors duration-300"
+              >
                 Shop Now
-              </button>
+              </Link>
             </div>
           </motion.div>
           <motion.div
