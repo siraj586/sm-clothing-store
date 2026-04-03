@@ -2,28 +2,31 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaSearch, FaUser, FaHeart, FaShoppingBag, FaBars, FaTimes, FaSun, FaMoon } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { useShop } from '../context/ShopContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [theme, setTheme] = useState('light');
+  const { cartItems, favoriteItems } = useShop();
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem('theme');
+    return saved === 'dark' ? 'dark' : 'light';
+  });
 
   useEffect(() => {
-    const saved = localStorage.getItem('theme');
-    const initial = saved === 'dark' ? 'dark' : 'light';
-    setTheme(initial);
-    document.documentElement.classList.toggle('dark', initial === 'dark');
-  }, []);
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   const applyTheme = (mode) => {
-    setTheme(mode);
     document.documentElement.classList.toggle('dark', mode === 'dark');
+    setTheme(mode);
     localStorage.setItem('theme', mode);
   };
 
   return (
     <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-6 h-16">
+        <div className="flex items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link
@@ -35,23 +38,44 @@ const Navbar = () => {
           </div>
 
           {/* Icons & Search */}
-          <div className="hidden md:flex items-center space-x-3">
-            <button className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white">
+          <div className="flex-1 hidden md:flex items-center justify-center space-x-3">
+            <button className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white" type="button">
               <FaSearch size={18} />
             </button>
-            <button className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white">
+            <button className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white" type="button">
               <FaUser size={18} />
             </button>
-            <button className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white">
-              <FaHeart size={18} />
-            </button>
-            <button className="flex items-center space-x-1 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white">
-              <FaShoppingBag size={18} />
-              <span>$0.00</span>
-            </button>
 
-            {/* Theme switcher */}
-            <div className="flex items-center gap-1 pl-2 border-l border-gray-200 dark:border-gray-700">
+            <Link
+              to="/favorites"
+              className="relative text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+              aria-label="Favorites"
+            >
+              <FaHeart size={18} />
+              {favoriteItems.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-black text-white dark:bg-white dark:text-black text-[10px] rounded-full px-1">
+                  {favoriteItems.length}
+                </span>
+              )}
+            </Link>
+
+            <Link
+              to="/cart"
+              className="relative flex items-center space-x-1 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+              aria-label="Cart"
+            >
+              <FaShoppingBag size={18} />
+              {cartItems.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-black text-white dark:bg-white dark:text-black text-[10px] rounded-full px-1">
+                  {cartItems.length}
+                </span>
+              )}
+            </Link>
+
+          </div>
+
+          {/* Theme switcher (right) */}
+          <div className="hidden md:flex items-center gap-1 pl-2 border-l border-gray-200 dark:border-gray-700">
               <button
                 type="button"
                 onClick={() => applyTheme('light')}
@@ -80,9 +104,7 @@ const Navbar = () => {
                   <FaMoon className="inline-block" size={14} />
                 </span>
               </button>
-            </div>
           </div>
-
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button
@@ -114,14 +136,22 @@ const Navbar = () => {
                   <FaUser size={18} />
                   <span>Sign In</span>
                 </button>
-                <button className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
+                <Link
+                  to="/favorites"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center space-x-2 text-gray-600 dark:text-gray-300"
+                >
                   <FaHeart size={18} />
                   <span>Wishlist</span>
-                </button>
-                <button className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
+                </Link>
+                <Link
+                  to="/cart"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center space-x-2 text-gray-600 dark:text-gray-300"
+                >
                   <FaShoppingBag size={18} />
-                  <span>Cart ($0.00)</span>
-                </button>
+                  <span>Cart ({cartItems.length})</span>
+                </Link>
 
                 <div className="flex gap-2 pt-2">
                   <button

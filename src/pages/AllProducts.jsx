@@ -13,14 +13,15 @@ const allImages = Object.entries(imageModules).map(([path, mod]) => {
 
 import { useEffect, useState } from 'react';
 import { FaShoppingBag, FaHeart } from 'react-icons/fa';
+import { useShop } from '../context/ShopContext';
 
 const AllProducts = () => {
   const [active, setActive] = useState('All');
   const [selectedId, setSelectedId] = useState(null);
-  const [favoriteIds, setFavoriteIds] = useState(() => new Set());
-  const [cartIds, setCartIds] = useState(() => new Set());
+  const { addToCart, toggleFavorite, isFavorite, isInCart } = useShop();
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelectedId(null);
   }, [active]);
 
@@ -41,23 +42,7 @@ const AllProducts = () => {
     ? allImages
     : allImages.filter(img => img.category === active);
 
-  const toggleFavorite = (id) => {
-    setFavoriteIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-
-  const addToCart = (id) => {
-    setCartIds((prev) => {
-      const next = new Set(prev);
-      next.add(id);
-      return next;
-    });
-  };
-
+    
   return (
     <section className="py-16 bg-white dark:bg-gray-900 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -84,8 +69,15 @@ const AllProducts = () => {
           {filtered.map((img) => {
             const price = getPrice(img.category);
             const isSelected = selectedId === img.id;
-            const isFav = favoriteIds.has(img.id);
-            const inCart = cartIds.has(img.id);
+            const isFav = isFavorite(img.id);
+            const inCart = isInCart(img.id);
+
+            const product = {
+              id: img.id,
+              src: img.src,
+              category: img.category,
+              price,
+            };
 
             return (
               <div
@@ -115,7 +107,7 @@ const AllProducts = () => {
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
-                              addToCart(img.id);
+                              addToCart(product);
                             }}
                             className={`p-2 rounded-md border transition-colors ${
                               inCart
@@ -131,7 +123,7 @@ const AllProducts = () => {
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
-                              toggleFavorite(img.id);
+                              toggleFavorite(product);
                             }}
                             className="p-2 rounded-md border border-white bg-black/40 text-white hover:bg-black/60 transition-colors"
                             aria-label="Favorite"
