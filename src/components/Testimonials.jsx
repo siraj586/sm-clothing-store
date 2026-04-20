@@ -27,7 +27,7 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -35,8 +35,8 @@ const Testimonials = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl font-bold tracking-tight">What Our Customers Say</h2>
-          <p className="text-gray-600 mt-2">Based on 10,000+ reviews</p>
+          <h2 className="text-3xl font-bold tracking-tight dark:text-gray-100">What Our Customers Say</h2>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">Based on 10,000+ reviews</p>
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -47,16 +47,16 @@ const Testimonials = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+              className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="flex text-yellow-400 mb-4">
                 {[...Array(5)].map((_, i) => (
                   <FaStar key={i} className="fill-current" />
                 ))}
               </div>
-              <p className="text-gray-700 mb-4">"{testimonial.text}"</p>
-              <div className="font-semibold">{testimonial.name}</div>
-              <div className="text-sm text-gray-500">Verified Buyer</div>
+              <p className="text-gray-700 dark:text-gray-300 mb-4">"{testimonial.text}"</p>
+              <div className="font-semibold dark:text-gray-100">{testimonial.name}</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">Verified Buyer</div>
             </motion.div>
           ))}
         </div>

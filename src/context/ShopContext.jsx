@@ -36,15 +36,34 @@ export const ShopProvider = ({ children }) => {
     [favoriteItems]
   );
 
-  const addToCart = (item) => {
+  // ✅ addToCart مع دعم الكمية
+  const addToCart = (product) => {
     setCartItems((prev) => {
-      if (prev.some((p) => p.id === item.id)) return prev;
-      return [...prev, item];
+      const exists = prev.find((item) => item.id === product.id);
+      if (exists) {
+        return prev.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [...prev, { ...product, quantity: 1 }];
     });
   };
 
   const removeFromCart = (id) => {
     setCartItems((prev) => prev.filter((p) => p.id !== id));
+  };
+
+  // ✅ updateQuantity جديدة
+  const updateQuantity = (id, amount) => {
+    setCartItems((prev) =>
+      prev
+        .map((item) =>
+          item.id === id ? { ...item, quantity: item.quantity + amount } : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
   };
 
   const toggleFavorite = (item) => {
@@ -66,6 +85,7 @@ export const ShopProvider = ({ children }) => {
         favoriteItems,
         addToCart,
         removeFromCart,
+        updateQuantity,
         toggleFavorite,
         isInCart,
         isFavorite,
@@ -81,4 +101,3 @@ export const useShop = () => {
   if (!ctx) throw new Error('useShop must be used within ShopProvider');
   return ctx;
 };
-

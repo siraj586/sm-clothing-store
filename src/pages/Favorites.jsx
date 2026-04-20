@@ -17,18 +17,40 @@ const Favorites = () => {
             </h1>
           </div>
 
-          <button
-            type="button"
-            onClick={() => navigate('/all-products')}
-            className="px-4 py-2 rounded-md border border-gray-300 hover:border-black dark:border-gray-700 dark:hover:border-gray-200 text-gray-900 dark:text-gray-100"
-          >
-            Back to products
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => navigate('/')}
+              className="px-4 py-2 rounded-md border border-gray-300 hover:border-black dark:border-gray-700 dark:hover:border-gray-200 text-gray-900 dark:text-gray-100"
+            >
+              ← Home
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/all-products')}
+              className="px-4 py-2 rounded-md border border-gray-300 hover:border-black dark:border-gray-700 dark:hover:border-gray-200 text-gray-900 dark:text-gray-100"
+            >
+              Back to products
+            </button>
+          </div>
         </div>
 
         {favoriteItems.length === 0 ? (
-          <div className="text-gray-600 dark:text-gray-300">
-            You have no favorites yet.
+          <div className="flex flex-col items-center justify-center py-24 text-center">
+            <FaHeart size={64} className="text-gray-200 dark:text-gray-700 mb-6" />
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+              No favorites yet
+            </h2>
+            <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-sm">
+              You haven't saved anything yet. Browse our products and hit the heart icon to save your favorites!
+            </p>
+            <button
+              type="button"
+              onClick={() => navigate('/all-products')}
+              className="px-8 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition-colors duration-300"
+            >
+              Browse Products
+            </button>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

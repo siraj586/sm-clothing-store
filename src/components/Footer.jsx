@@ -38,15 +38,15 @@ const Footer = () => {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-2">
                 <FaMapMarkerAlt className="mt-1 flex-shrink-0" />
-                <span>123 Fashion Street, Style City, NY 10001, United States</span>
+                <span>Lebanon</span>
               </li>
               <li className="flex items-center gap-2">
                 <FaPhone />
-                <span>+1 (555) 123-4567</span>
+                <span>+961 71 590 629</span>
               </li>
               <li className="flex items-center gap-2">
                 <FaEnvelope />
-                <span>support@smclothing.com</span>
+                <span>sirajmassoud089@gmail.com</span>
               </li>
             </ul>
           </div>
