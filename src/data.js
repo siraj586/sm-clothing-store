@@ -1,11 +1,11 @@
-import img1 from "./assets/all products/trending products/photo-1591047139829-d91aecb6caea.jpeg";
-import img2 from "./assets/all products/trending products/photo-1581655353564-df123a1eb820.jpeg";
-import img3 from "./assets/all products/trending products/photo-1473966968600-fa801b869a1a.jpeg";
-import img4 from "./assets/all products/new arrivals/photo-1620799140188-3b2a02fd9a77.jpeg";
-import img5 from "./assets/all products/new arrivals/photo-1556821840-3a63f95609a7.jpeg";
-import img6 from "./assets/all products/new arrivals/photo-1594633312681-425c7b97ccd1.jpeg";
-import img7 from "./assets/all products/new arrivals/photo-1525966222134-fcfa99b8ae77.jpeg";
-import img8 from "./assets/all products/new arrivals/photo-1556905055-8f358a7a47b2.jpeg";
+import img1 from "./assets/all products/new Arrivals/1.jpeg"
+import img2 from "./assets/all products/new Arrivals/2.jpeg"
+import img3 from "./assets/all products/new Arrivals/3.jpeg"
+import img4 from "./assets/all products/new Arrivals/4.jpeg"
+import img5 from "./assets/all products/trending Products/1.jpg"
+import img6 from "./assets/all products/trending Products/2.jpeg"
+import img7 from "./assets/all products/trending Products/3.jpeg"
+import img8 from "./assets/all products/trending Products/4.jpeg"
 
 // ===== مثال: القميص الكتان عنده 3 ألوان =====
 // import shirtBeige from "./assets/all products/summer/shirt-beige-linen.jpg";
@@ -18,7 +18,7 @@ export const trendingProducts = [
     title: "Classic Denim Jacket",
     price: 89.00,
     originalPrice: null,
-    image: img8,          // الصورة الافتراضية (تظهر في الكارد)
+    image: img1,          // الصورة الافتراضية (تظهر في الكارد)
     // images: مصفوفة الألوان — اشيل التعليق وأضيف الصور الحقيقية
     // images: [
     //   { src: img8,      color: 'Indigo', hex: '#3b4d8a' },
@@ -34,7 +34,7 @@ export const trendingProducts = [
     title: "Cotton Overshirt",
     price: 75.00,
     originalPrice: null,
-    image: img1,
+    image: img2,
     badge: "NEW",
     rating: 4.8,
     reviewCount: 124,
@@ -44,7 +44,7 @@ export const trendingProducts = [
     title: "Relaxed Fit Tee",
     price: 35.00,
     originalPrice: 45.00,
-    image: img2,
+    image: img3,
     badge: "SALE",
     rating: 4.3,
     reviewCount: 92,
@@ -54,7 +54,7 @@ export const trendingProducts = [
     title: "Cargo Pants",
     price: 78.00,
     originalPrice: null,
-    image: img3,
+    image: img4,
     badge: "ORIGINAL",
     rating: 4.6,
     reviewCount: 45,
@@ -67,7 +67,7 @@ export const newArrivals = [
     title: "Premium Knit Sweater",
     price: 85.00,
     originalPrice: null,
-    image: img4,
+    image: img5,
     badge: "NEW",
     rating: 4.7,
     reviewCount: 42,
@@ -77,7 +77,7 @@ export const newArrivals = [
     title: "Casual Graphic Hoodie",
     price: 65.50,
     originalPrice: 80.00,
-    image: img5,
+    image: img6,
     badge: "SALE",
     rating: 4.5,
     reviewCount: 112,
@@ -87,7 +87,7 @@ export const newArrivals = [
     title: "Slim Fit Chino Pants",
     price: 75.00,
     originalPrice: null,
-    image: img6,
+    image: img7,
     badge: null,
     rating: 4.4,
     reviewCount: 89,
@@ -97,7 +97,7 @@ export const newArrivals = [
     title: "Canvas High-Top Sneakers",
     price: 110.00,
     originalPrice: null,
-    image: img7,
+    image: img8,
     badge: "NEW",
     rating: 4.9,
     reviewCount: 34,

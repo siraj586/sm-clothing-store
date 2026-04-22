@@ -72,12 +72,33 @@ const AllProducts = () => {
   const searchQuery = searchParams.get("search") || "";
   const navigate = useNavigate();
 
+  // Fuzzy match helper — بيشتغل حتى لو في غلطة إملائية
+  const fuzzyMatch = (query, target) => {
+    const q = query.toLowerCase().trim();
+    const t = target.toLowerCase();
+    if (!q) return true;
+    if (t.includes(q)) return true;
+    // levenshtein-style partial match
+    let qi = 0;
+    for (let ti = 0; ti < t.length && qi < q.length; ti++) {
+      if (t[ti] === q[qi]) qi++;
+    }
+    return qi / q.length >= 0.7;
+  };
+
   useEffect(() => {
     if (searchQuery) {
-      const matched = categories.find(
+      // أول حاول exact/includes match
+      const exact = categories.find(
         (cat) => cat.toLowerCase() === searchQuery.toLowerCase()
       );
-      setActive(matched || "All");
+      // لو ما لقى exact، جرّب fuzzy
+      const fuzzy = !exact && categories.find(
+        (cat) => cat !== "All" && fuzzyMatch(searchQuery, cat)
+      );
+      setActive(exact || fuzzy || "All");
+    } else {
+      setActive("All");
     }
   }, [searchQuery]);
 
@@ -85,8 +106,7 @@ const AllProducts = () => {
     const filtered = allImages.filter((img) => {
       const matchCat = active === "All" || img.category === active;
       const matchSearch =
-        searchQuery === "" ||
-        img.category.toLowerCase().includes(searchQuery.toLowerCase());
+        searchQuery === "" || fuzzyMatch(searchQuery, img.category);
       return matchCat && matchSearch;
     });
     return buildProducts(filtered).sort((a, b) => {
@@ -169,8 +189,22 @@ const AllProducts = () => {
 
         {products.length === 0 && (
           <div className="text-center text-gray-500 dark:text-gray-400 mt-20">
-            <p className="text-xl font-semibold mb-2">No products found</p>
-            <p className="text-sm">Try searching for: bag, shoes, hat, belt...</p>
+            <div className="text-5xl mb-4">🔍</div>
+            <p className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
+              No results for "{searchQuery}"
+            </p>
+            <p className="text-sm mb-6">Double check your spelling, or try one of these:</p>
+            <div className="flex flex-wrap gap-2 justify-center">
+              {["bag", "shoes", "hat", "Belt", "sunglasses", "wallet"].map((s) => (
+                <button
+                  key={s}
+                  onClick={() => navigate(`/all-products?search=${s}`)}
+                  className="px-4 py-1.5 rounded-full border border-gray-300 dark:border-gray-600 text-sm hover:border-black dark:hover:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors capitalize"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
           </div>
         )}
 

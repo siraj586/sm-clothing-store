@@ -2,26 +2,26 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 import imgTshirt from '../assets/all products/summer/tshirt-black.jpg';
-import imgShorts from '../assets/all products/summer/shorts-denim.jpg';
+import imgShorts from '../assets/all products/summer/ripped-jeans.webp';
 import imgNavyLinen from '../assets/all products/summer/shirt-navy-linen.jpg';
 import imgBlueLinen from '../assets/all products/summer/shirt-blue-linen.jpg';
 import imgBeigeLinen from '../assets/all products/summer/shirt-beige-linen.jpg';
-import imgJeans from '../assets/all products/summer/jeans-ripped.jpg';
+import imgJeans from '../assets/all products/summer/denim-shorts.webp';
 
 const items = [
-  { img: imgNavyLinen,  label: 'Linen Shirt',   tag: 'BESTSELLER', span: 'row-span-2' },
-  { img: imgTshirt,     label: 'Classic Tee',    tag: 'NEW',        span: '' },
-  { img: imgShorts,     label: 'Denim Shorts',   tag: 'SUMMER',     span: '' },
-  { img: imgBlueLinen,  label: 'Blue Linen',     tag: 'NEW',        span: '' },
-  { img: imgBeigeLinen, label: 'Beige Linen',    tag: 'SUMMER',     span: '' },
-  { img: imgJeans,      label: 'Ripped Jeans',   tag: 'TRENDING',   span: '' },
+  { img: imgNavyLinen, label: 'Linen Shirt', tag: 'BESTSELLER', span: 'row-span-2' },
+  { img: imgTshirt, label: 'Classic Tee', tag: 'NEW', span: '' },
+  { img: imgShorts, label: 'Denim Shorts', tag: 'SUMMER', span: '' },
+  { img: imgBlueLinen, label: 'Blue Linen', tag: 'NEW', span: '' },
+  { img: imgBeigeLinen, label: 'Beige Linen', tag: 'SUMMER', span: '' },
+  { img: imgJeans, label: 'Ripped Jeans', tag: 'TRENDING', span: '' },
 ];
 
 const tagColors = {
   BESTSELLER: 'bg-amber-400 text-black',
-  NEW:        'bg-white text-black',
-  SUMMER:     'bg-sky-400 text-white',
-  TRENDING:   'bg-rose-500 text-white',
+  NEW: 'bg-white text-black',
+  SUMMER: 'bg-sky-400 text-white',
+  TRENDING: 'bg-rose-500 text-white',
 };
 
 const SummerSpring = () => {
