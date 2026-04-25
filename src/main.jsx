@@ -24,6 +24,8 @@ import LoadingScreen from './components/LoadingScreen';
 import SummerSpring from './components/summer&spring';
 import MenProducts from './pages/MenProducts';
 import WomenProducts from './pages/WomenProducts';
+import OrderConfirmation from './pages/OrderConfirmation';
+import BottomNav from './components/BottomNav';
 
 // eslint-disable-next-line react-refresh/only-export-components
 const App = () => {
@@ -64,9 +66,11 @@ const App = () => {
                 <Route path="/home-product/:id" element={<PageWrapper><HomeProductDetail /></PageWrapper>} />
                 <Route path="/men" element={<PageWrapper><MenProducts /></PageWrapper>} />
                 <Route path="/women" element={<PageWrapper><WomenProducts /></PageWrapper>} />
+                <Route path="/order-confirmation" element={<PageWrapper><OrderConfirmation /></PageWrapper>} />
               </Routes>
               <Footer />
               <FloatingButtons />
+              <BottomNav />
               <AuthModal isOpen={authOpen} onClose={() => setAuthOpen(false)} />
             </BrowserRouter>
           </div>

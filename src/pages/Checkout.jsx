@@ -11,7 +11,6 @@ const Checkout = () => {
   const { cartItems, removeFromCart } = useShop();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
-  const [orderPlaced, setOrderPlaced] = useState(false);
 
   const [form, setForm] = useState({
     firstName: "",
@@ -63,34 +62,17 @@ const Checkout = () => {
   };
 
   const handlePlaceOrder = () => {
-    setOrderPlaced(true);
+    const orderData = {
+      form,
+      cartItems: [...cartItems],
+      total,
+      subtotal,
+      shipping,
+      discountAmount,
+    };
     cartItems.forEach((item) => removeFromCart(item.id));
+    navigate('/order-confirmation', { state: orderData });
   };
-
-  if (orderPlaced) {
-    return (
-      <section className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center px-4">
-        <div className="text-center max-w-md">
-          <div className="w-20 h-20 bg-black dark:bg-white rounded-full flex items-center justify-center mx-auto mb-6">
-            <FaCheck size={32} className="text-white dark:text-black" />
-          </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-3">
-            Order Placed!
-          </h1>
-          <p className="text-gray-500 dark:text-gray-400 mb-8">
-            Thank you {form.firstName}! Your order has been confirmed and will
-            be shipped to {form.city}.
-          </p>
-          <button
-            onClick={() => navigate("/all-products")}
-            className="px-8 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition-colors"
-          >
-            Continue Shopping
-          </button>
-        </div>
-      </section>
-    );
-  }
 
   if (cartItems.length === 0) {
     return (

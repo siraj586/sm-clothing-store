@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useMemo } from 'react';
-import { FaShoppingBag, FaHeart, FaArrowLeft } from 'react-icons/fa';
+import { FaShoppingBag, FaHeart, FaArrowLeft, FaSearchPlus, FaTimes } from 'react-icons/fa';
 import { useShop } from '../context/ShopContext';
 
 // ======= تحميل كل الصور =======
@@ -81,6 +81,7 @@ const ProductDetail = () => {
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedTypeIndex, setSelectedTypeIndex] = useState(0);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [zoomOpen, setZoomOpen] = useState(false);
 
   const decodedId = decodeURIComponent(id);
 
@@ -160,6 +161,80 @@ const ProductDetail = () => {
 
   return (
     <section className="min-h-screen bg-white dark:bg-gray-900 py-12">
+
+      {/* ===== Image Zoom Modal ===== */}
+      {zoomOpen === true && (
+        <div
+          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+          onClick={() => setZoomOpen(false)}
+        >
+          <button
+            onClick={() => setZoomOpen(false)}
+            className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors"
+            aria-label="Close zoom"
+          >
+            <FaTimes size={28} />
+          </button>
+          <img
+            src={currentImage?.src}
+            alt={productTitle}
+            className="max-h-[90vh] max-w-[90vw] object-contain rounded-xl shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
+
+      {/* ===== Size Guide Modal ===== */}
+      {zoomOpen === 'guide' && (
+        <div
+          className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4"
+          onClick={() => setZoomOpen(false)}
+        >
+          <div
+            className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl p-6 w-full max-w-md"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">Size Guide</h3>
+              <button onClick={() => setZoomOpen(false)} className="text-gray-400 hover:text-black dark:hover:text-white">
+                <FaTimes size={18} />
+              </button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-center border-collapse">
+                <thead>
+                  <tr className="bg-gray-100 dark:bg-gray-800">
+                    <th className="py-2 px-3 text-gray-700 dark:text-gray-300 font-semibold rounded-tl-lg">Size</th>
+                    <th className="py-2 px-3 text-gray-700 dark:text-gray-300 font-semibold">Chest (in)</th>
+                    <th className="py-2 px-3 text-gray-700 dark:text-gray-300 font-semibold">Waist (in)</th>
+                    <th className="py-2 px-3 text-gray-700 dark:text-gray-300 font-semibold rounded-tr-lg">Hip (in)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { s: 'XS', c: '32–34', w: '26–28', h: '34–36' },
+                    { s: 'S',  c: '34–36', w: '28–30', h: '36–38' },
+                    { s: 'M',  c: '38–40', w: '32–34', h: '40–42' },
+                    { s: 'L',  c: '42–44', w: '36–38', h: '44–46' },
+                    { s: 'XL', c: '46–48', w: '40–42', h: '48–50' },
+                  ].map((row, i) => (
+                    <tr key={row.s} className={i % 2 === 0 ? 'bg-white dark:bg-gray-900' : 'bg-gray-50 dark:bg-gray-800/50'}>
+                      <td className="py-2 px-3 font-bold text-gray-900 dark:text-gray-100">{row.s}</td>
+                      <td className="py-2 px-3 text-gray-600 dark:text-gray-400">{row.c}</td>
+                      <td className="py-2 px-3 text-gray-600 dark:text-gray-400">{row.w}</td>
+                      <td className="py-2 px-3 text-gray-600 dark:text-gray-400">{row.h}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs text-gray-400 dark:text-gray-500 mt-4 text-center">
+              Measurements are in inches. If between sizes, size up.
+            </p>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <button
@@ -176,13 +251,21 @@ const ProductDetail = () => {
           <div className="flex flex-col gap-4">
 
             {/* الصورة الرئيسية */}
-            <div className="rounded-xl overflow-hidden shadow-lg bg-gray-50 dark:bg-gray-800">
+            <div className="rounded-xl overflow-hidden shadow-lg bg-gray-50 dark:bg-gray-800 relative group">
               <img
                 key={currentImage?.id}
                 src={currentImage?.src}
                 alt={productTitle}
                 className="w-full h-[480px] object-cover transition-opacity duration-300"
               />
+              {/* Zoom Button */}
+              <button
+                onClick={() => setZoomOpen(true)}
+                className="absolute top-3 right-3 bg-white/80 dark:bg-black/60 backdrop-blur-sm text-gray-800 dark:text-gray-100 rounded-full p-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-white dark:hover:bg-black shadow-md"
+                aria-label="Zoom image"
+              >
+                <FaSearchPlus size={16} />
+              </button>
             </div>
 
             {/* Thumbnails — صور نفس الـ type الحالي */}
@@ -263,12 +346,21 @@ const ProductDetail = () => {
 
             {/* ===== Size Selector ===== */}
             <div>
-              <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">
-                Size
-                {selectedSize && (
-                  <span className="ml-2 font-normal text-gray-500">— {selectedSize}</span>
-                )}
-              </p>
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                  Size
+                  {selectedSize && (
+                    <span className="ml-2 font-normal text-gray-500">— {selectedSize}</span>
+                  )}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setZoomOpen('guide')}
+                  className="text-xs text-gray-500 dark:text-gray-400 underline hover:text-black dark:hover:text-white transition-colors"
+                >
+                  Size Guide
+                </button>
+              </div>
               <div className="flex gap-2 flex-wrap">
                 {sizes.map((size) => (
                   <button

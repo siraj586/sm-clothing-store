@@ -27,13 +27,13 @@ const Cart = () => {
     >
       ← Home
     </button>
-    <buttonf
+    <button
       type="button"
       onClick={() => navigate('/all-products')}
       className="px-4 py-2 rounded-md border border-gray-300 hover:border-black dark:border-gray-700 dark:hover:border-gray-200 text-gray-900 dark:text-gray-100"
     >
       Continue shopping
-    </buttonf>
+    </button>
   </div>
 </div>
 
@@ -56,56 +56,55 @@ const Cart = () => {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-4">
               {cartItems.map((item) => (
                 <div
                   key={item.id}
-                  className="rounded-lg overflow-hidden shadow-sm bg-white dark:bg-gray-800"
+                  className="flex items-center gap-3 rounded-xl p-3 bg-white dark:bg-gray-800 shadow-sm"
                 >
+                  {/* Thumbnail */}
                   <img
                     src={item.src}
                     alt={item.category}
-                    className="w-full h-56 object-cover"
+                    className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg flex-shrink-0"
                   />
-                  <div className="p-4">
-                    {/* Category & Price */}
-                    <div className="font-medium capitalize text-gray-900 dark:text-gray-100">
+
+                  {/* Info */}
+                  <div className="flex-1 min-w-0">
+                    <div className="font-semibold capitalize text-gray-900 dark:text-gray-100 text-sm truncate">
                       {item.category}
                     </div>
                     {item.size && (
-  <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-    Size: <span className="font-semibold">{item.size}</span>
-  </div>
-)}
-                    <div className="mt-1 font-bold text-gray-900 dark:text-gray-100">
+                      <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                        Size: <span className="font-semibold">{item.size}</span>
+                      </div>
+                    )}
+                    <div className="text-sm font-bold text-gray-900 dark:text-gray-100 mt-1">
                       ${item.price.toFixed(2)}
                     </div>
 
-                    {/* Quantity Controls + Subtotal & Remove */}
-                    <div className="mt-4 flex items-center justify-between">
-                      
-                      {/* + و − */}
-                      <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-md overflow-hidden">
+                    {/* Quantity + Remove */}
+                    <div className="flex items-center justify-between mt-2">
+                      <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden">
                         <button
                           type="button"
                           onClick={() => updateQuantity(item.id, -1)}
-                          className="px-3 py-1 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-lg font-medium"
+                          className="px-3 py-1 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-base font-medium"
                         >
                           −
                         </button>
-                        <span className="px-4 py-1 text-gray-900 dark:text-gray-100 font-semibold border-x border-gray-300 dark:border-gray-600">
+                        <span className="px-3 py-1 text-gray-900 dark:text-gray-100 font-semibold border-x border-gray-300 dark:border-gray-600 text-sm">
                           {item.quantity}
                         </span>
                         <button
                           type="button"
                           onClick={() => updateQuantity(item.id, +1)}
-                          className="px-3 py-1 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-lg font-medium"
+                          className="px-3 py-1 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-base font-medium"
                         >
                           +
                         </button>
                       </div>
 
-                      {/* Subtotal + Remove */}
                       <div className="text-right">
                         <div className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                           ${(item.price * item.quantity).toFixed(2)}
@@ -113,7 +112,7 @@ const Cart = () => {
                         <button
                           type="button"
                           onClick={() => removeFromCart(item.id)}
-                          className="text-xs text-red-400 hover:text-red-600 transition-colors mt-1"
+                          className="text-xs text-red-400 hover:text-red-600 transition-colors mt-0.5"
                         >
                           Remove
                         </button>

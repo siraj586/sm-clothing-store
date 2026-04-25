@@ -143,12 +143,12 @@ const AllProducts = () => {
         )}
 
         {/* Filter */}
-        <div className="flex flex-wrap gap-3 justify-center mb-6">
+        <div className="flex gap-2 overflow-x-auto pb-2 mb-6 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:justify-center">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActive(cat)}
-              className={`px-5 py-2 rounded-full border font-medium transition-colors duration-200 capitalize
+              className={`flex-shrink-0 px-5 py-2 rounded-full border font-medium transition-colors duration-200 capitalize
                 ${active === cat
                   ? "bg-black text-white border-black"
                   : "bg-white text-gray-700 border-gray-300 hover:border-black dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:border-gray-300"
@@ -164,26 +164,43 @@ const AllProducts = () => {
           <p className="text-sm text-gray-500 dark:text-gray-400">
             {products.length} products
           </p>
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-sm text-gray-600 dark:text-gray-300">Sort by:</span>
-            {[
-              { key: "default", label: "Default" },
-              { key: "high-to-low", label: "Price: High → Low" },
-              { key: "low-to-high", label: "Price: Low → High" },
-            ].map((s) => (
-              <button
-                key={s.key}
-                type="button"
-                onClick={() => setSortOrder(s.key)}
-                className={`px-3 py-1.5 rounded-full text-sm border transition-colors ${
-                  sortOrder === s.key
-                    ? "bg-black text-white border-black"
-                    : "bg-white text-gray-700 border-gray-300 hover:border-black dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700"
-                }`}
-              >
-                {s.label}
-              </button>
-            ))}
+
+          {/* Sort — dropdown on mobile, buttons on desktop */}
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600 dark:text-gray-300 hidden sm:inline">Sort by:</span>
+
+            {/* Mobile dropdown */}
+            <select
+              className="sm:hidden border border-gray-300 dark:border-gray-600 rounded-full px-3 py-1.5 text-sm bg-white dark:bg-gray-800 dark:text-gray-200 outline-none"
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
+            >
+              <option value="default">Default</option>
+              <option value="high-to-low">Price: High → Low</option>
+              <option value="low-to-high">Price: Low → High</option>
+            </select>
+
+            {/* Desktop buttons */}
+            <div className="hidden sm:flex items-center gap-2">
+              {[
+                { key: "default", label: "Default" },
+                { key: "high-to-low", label: "Price: High → Low" },
+                { key: "low-to-high", label: "Price: Low → High" },
+              ].map((s) => (
+                <button
+                  key={s.key}
+                  type="button"
+                  onClick={() => setSortOrder(s.key)}
+                  className={`px-3 py-1.5 rounded-full text-sm border transition-colors ${
+                    sortOrder === s.key
+                      ? "bg-black text-white border-black"
+                      : "bg-white text-gray-700 border-gray-300 hover:border-black dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700"
+                  }`}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 

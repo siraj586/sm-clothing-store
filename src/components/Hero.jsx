@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import heroImg from '../assets/all products/new Arrivals/photo-1556905055-8f358a7a47b2.jpeg';
 
 const containerVariants = {
   hidden: {},
@@ -14,14 +15,15 @@ const itemVariants = {
 const Hero = () => {
   return (
     <section className="bg-gray-50 dark:bg-gray-900 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-24">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
 
-          {/* Text side — stagger children */}
+          {/* Text side */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
+            className="text-center md:text-left"
           >
             <div className="space-y-4">
               <motion.span
@@ -33,10 +35,10 @@ const Hero = () => {
 
               <motion.h1
                 variants={itemVariants}
-                className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight"
               >
                 Life Style <br />
-                <span className="text-gray-800 dark:text-gray-100">Collection - MEN</span>
+                <span className="text-gray-800 dark:text-gray-100">Collection - MEN / WOMEN</span>
               </motion.h1>
 
               <motion.div
@@ -46,14 +48,14 @@ const Hero = () => {
                 SALE UP TO 30% OFF
               </motion.div>
 
-              <motion.p variants={itemVariants} className="text-gray-600 max-w-md">
+              <motion.p variants={itemVariants} className="text-gray-600 dark:text-gray-400 max-w-md mx-auto md:mx-0 text-sm sm:text-base">
                 Get Free Shipping on orders over $50. Discover the latest trends in men's fashion today.
               </motion.p>
 
-              <motion.div variants={itemVariants}>
+              <motion.div variants={itemVariants} className="flex justify-center md:justify-start">
                 <Link
                   to="/all-products"
-                  className="mt-4 inline-flex items-center justify-center bg-black text-white px-8 py-3 rounded-full font-semibold hover:bg-gray-800 transition-colors duration-300"
+                  className="mt-2 inline-flex items-center justify-center bg-black text-white px-8 py-3 rounded-full font-semibold hover:bg-gray-800 transition-colors duration-300"
                 >
                   Shop Now
                 </Link>
@@ -68,7 +70,6 @@ const Hero = () => {
             transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
             className="relative"
           >
-            {/* Decorative bg blob */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -76,9 +77,9 @@ const Hero = () => {
               className="absolute -inset-4 bg-gray-200 dark:bg-gray-700 rounded-2xl -z-10"
             />
             <img
-              src="../src/assets/all products/new arrivals/photo-1556905055-8f358a7a47b2.jpeg"
+              src={heroImg}
               alt="Men's fashion"
-              className="rounded-lg shadow-xl object-cover w-full h-auto relative z-10"
+              className="rounded-lg shadow-xl object-cover w-full h-64 sm:h-80 md:h-96 relative z-10"
             />
           </motion.div>
 

@@ -15,7 +15,7 @@ const FloatingButtons = () => {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
+    <div className="fixed bottom-6 right-6 md:bottom-6 bottom-20 flex flex-col gap-3 z-40">
       {/* WhatsApp */}
       <motion.a
         href="https://wa.me/96171590629"

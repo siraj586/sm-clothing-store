@@ -299,10 +299,18 @@ const Navbar = ({ onAuthOpen }) => {
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden ml-auto">
+          {/* Mobile: show cart badge + hamburger only */}
+          <div className="md:hidden ml-auto flex items-center gap-3">
+            <Link to="/cart" className="relative text-gray-600 dark:text-gray-300">
+              <FaShoppingBag size={20} />
+              {cartItems.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-black text-white dark:bg-white dark:text-black text-[9px] font-bold rounded-full min-w-[16px] h-4 flex items-center justify-center px-0.5">
+                  {cartItems.length}
+                </span>
+              )}
+            </Link>
             <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white">
-              {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+              {isMenuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
             </button>
           </div>
         </div>
