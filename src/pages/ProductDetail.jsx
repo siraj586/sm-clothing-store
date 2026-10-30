@@ -5,9 +5,9 @@ import { useShop } from '../context/ShopContext';
 
 // ======= تحميل كل الصور =======
 const webpModules = import.meta.glob('../assets/all products/**/*.webp', { eager: true });
-const jpgModules  = import.meta.glob('../assets/all products/**/*.jpg',  { eager: true });
+const jpgModules = import.meta.glob('../assets/all products/**/*.jpg', { eager: true });
 const jpegModules = import.meta.glob('../assets/all products/**/*.jpeg', { eager: true });
-const pngModules  = import.meta.glob('../assets/all products/**/*.png',  { eager: true });
+const pngModules = import.meta.glob('../assets/all products/**/*.png', { eager: true });
 
 const allRawImages = [
   ...Object.entries(webpModules),
@@ -17,9 +17,9 @@ const allRawImages = [
 ].map(([path, mod]) => {
   const parts = path.split('/');
   const typeFolder = parts[parts.length - 2];
-  const catFolder  = parts[parts.length - 3];
+  const catFolder = parts[parts.length - 3];
   const isTyped = /^t[yu]pe\s*\d+$/i.test(typeFolder);
-  const category  = isTyped ? catFolder  : typeFolder;
+  const category = isTyped ? catFolder : typeFolder;
   const typeLabel = isTyped ? typeFolder : 'type 1';
   return { id: path, src: mod.default, category, typeLabel, path };
 });
@@ -62,16 +62,16 @@ const sizes = ['XS', 'S', 'M', 'L', 'XL'];
 
 // ألوان للـ swatches — يتناوب عليها كل type
 const colorPalettes = [
-  { name: 'Midnight',  hex: '#1a1a2e' },
-  { name: 'Caramel',   hex: '#c19a6b' },
-  { name: 'Slate',     hex: '#4a5568' },
-  { name: 'Burgundy',  hex: '#7c2d3e' },
-  { name: 'Olive',     hex: '#6b7c45' },
-  { name: 'Sand',      hex: '#d4b896' },
-  { name: 'Navy',      hex: '#1e3a5f' },
-  { name: 'Rust',      hex: '#b5451b' },
-  { name: 'Forest',    hex: '#2d5a27' },
-  { name: 'Ivory',     hex: '#f5f0e8' },
+  { name: 'Midnight', hex: '#1a1a2e' },
+  { name: 'Caramel', hex: '#c19a6b' },
+  { name: 'Slate', hex: '#4a5568' },
+  { name: 'Burgundy', hex: '#7c2d3e' },
+  { name: 'Olive', hex: '#6b7c45' },
+  { name: 'Sand', hex: '#d4b896' },
+  { name: 'Navy', hex: '#1e3a5f' },
+  { name: 'Rust', hex: '#b5451b' },
+  { name: 'Forest', hex: '#2d5a27' },
+  { name: 'Ivory', hex: '#f5f0e8' },
 ];
 
 const ProductDetail = () => {
@@ -213,9 +213,9 @@ const ProductDetail = () => {
                 <tbody>
                   {[
                     { s: 'XS', c: '32–34', w: '26–28', h: '34–36' },
-                    { s: 'S',  c: '34–36', w: '28–30', h: '36–38' },
-                    { s: 'M',  c: '38–40', w: '32–34', h: '40–42' },
-                    { s: 'L',  c: '42–44', w: '36–38', h: '44–46' },
+                    { s: 'S', c: '34–36', w: '28–30', h: '36–38' },
+                    { s: 'M', c: '38–40', w: '32–34', h: '40–42' },
+                    { s: 'L', c: '42–44', w: '36–38', h: '44–46' },
                     { s: 'XL', c: '46–48', w: '40–42', h: '48–50' },
                   ].map((row, i) => (
                     <tr key={row.s} className={i % 2 === 0 ? 'bg-white dark:bg-gray-900' : 'bg-gray-50 dark:bg-gray-800/50'}>
@@ -275,11 +275,10 @@ const ProductDetail = () => {
                   <button
                     key={img.id}
                     onClick={() => setSelectedImageIndex(idx)}
-                    className={`w-16 h-16 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
-                      selectedImageIndex === idx
+                    className={`w-16 h-16 rounded-lg overflow-hidden border-2 transition-all duration-200 ${selectedImageIndex === idx
                         ? 'border-black dark:border-white scale-105 shadow-md'
                         : 'border-transparent opacity-60 hover:opacity-100 hover:border-gray-300'
-                    }`}
+                      }`}
                   >
                     <img src={img.src} alt="" className="w-full h-full object-cover" />
                   </button>
@@ -324,11 +323,10 @@ const ProductDetail = () => {
                         key={group.typeLabel}
                         onClick={() => handleTypeChange(idx)}
                         title={`${group.typeLabel} — ${color.name}`}
-                        className={`relative w-14 h-14 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
-                          typeIndex === idx
+                        className={`relative w-14 h-14 rounded-lg overflow-hidden border-2 transition-all duration-200 ${typeIndex === idx
                             ? 'border-black dark:border-white scale-110 shadow-lg'
                             : 'border-gray-200 dark:border-gray-700 opacity-70 hover:opacity-100 hover:scale-105'
-                        }`}
+                          }`}
                       >
                         {/* صورة مصغرة */}
                         <img src={thumbSrc} alt={group.typeLabel} className="w-full h-full object-cover" />
@@ -362,16 +360,15 @@ const ProductDetail = () => {
                 </button>
               </div>
               <div className="flex gap-2 flex-wrap">
-                {sizes.map((size) => (
+                {(category?.toLowerCase().includes('shoe') ? ['38', '39', '40', '41', '42', '43', '44', '45'] : sizes).map((size) => (
                   <button
                     key={size}
                     type="button"
                     onClick={() => setSelectedSize(size)}
-                    className={`w-12 h-12 rounded-md border text-sm font-semibold transition-colors ${
-                      selectedSize === size
+                    className={`w-12 h-12 rounded-md border text-sm font-semibold transition-colors ${selectedSize === size
                         ? 'bg-black text-white border-black dark:bg-white dark:text-black'
                         : 'bg-white text-gray-700 border-gray-300 hover:border-black dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600'
-                    }`}
+                      }`}
                   >
                     {size}
                   </button>
@@ -390,11 +387,10 @@ const ProductDetail = () => {
                   if (!selectedSize) return alert('Please select a size first!');
                   addToCart(cartProduct);
                 }}
-                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-full font-semibold transition-colors ${
-                  inCart
+                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-full font-semibold transition-colors ${inCart
                     ? 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200'
                     : 'bg-black text-white hover:bg-gray-800 dark:hover:bg-gray-700'
-                }`}
+                  }`}
               >
                 <FaShoppingBag size={16} />
                 {inCart ? 'Added to Cart ✓' : 'Add to Cart'}
@@ -403,11 +399,10 @@ const ProductDetail = () => {
               <button
                 type="button"
                 onClick={() => toggleFavorite(cartProduct)}
-                className={`p-3 rounded-full border transition-colors ${
-                  isFav
+                className={`p-3 rounded-full border transition-colors ${isFav
                     ? 'border-pink-400 bg-pink-50 dark:bg-pink-900/20'
                     : 'border-gray-300 hover:border-pink-400 dark:border-gray-600'
-                }`}
+                  }`}
                 aria-label="Favorite"
               >
                 <FaHeart size={18} className={isFav ? 'text-pink-400' : 'text-gray-400'} />

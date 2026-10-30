@@ -171,7 +171,7 @@ const HomeProductDetail = () => {
                 {selectedSize && <span className="ml-2 font-normal text-gray-500">— {selectedSize}</span>}
               </p>
               <div className="flex gap-2 flex-wrap">
-                {sizes.map((size) => (
+                {(product.title?.toLowerCase().includes('shoe') || product.title?.toLowerCase().includes('sneaker') ? ['38', '39', '40', '41', '42', '43', '44', '45'] : sizes).map((size) => (
                   <button
                     key={size}
                     type="button"

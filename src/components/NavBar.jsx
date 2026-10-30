@@ -7,16 +7,39 @@ import { useShop } from '../context/ShopContext';
 import { useAuth } from '../context/AuthContext';
 import logoLight from '../assets/logo-alt-light-transparent.png';
 
-// كل الكاتيغوريات الموجودة في المتجر
-const ALL_CATEGORIES = [
-  "bag", "Belt", "hat", "shoes", "shorts", "sunglasses", "tank top", "wallet",
-  "w-hat", "w-jeans", "w-pants", "w-shoes", "w-shortes", "w-sport shoes",
-  "w-sweater", "w-t-shirt", "w-tanktop",
-  "men", "women", "new arrivals", "trending"
+// === قراءة الكاتيغوريات ديناميكياً من المتجر ===
+const webpModules = import.meta.glob("../assets/all products/**/*.webp", { eager: true });
+const jpgModules  = import.meta.glob("../assets/all products/**/*.jpg",  { eager: true });
+const jpegModules = import.meta.glob("../assets/all products/**/*.jpeg", { eager: true });
+const pngModules  = import.meta.glob("../assets/all products/**/*.png",  { eager: true });
+
+const allRawPaths = [
+  ...Object.keys(webpModules),
+  ...Object.keys(jpgModules),
+  ...Object.keys(jpegModules),
+  ...Object.keys(pngModules),
 ];
 
+const EXCLUDED = ["trending products", "new arrivals", "summer", "winter", "logo-alt-light-transparent"];
+
+const dynamicCategories = allRawPaths.reduce((acc, path) => {
+  if (EXCLUDED.some((ex) => path.toLowerCase().includes(ex.toLowerCase()))) return acc;
+  const parts = path.split("/");
+  const typeFolder = parts[parts.length - 2];
+  const catFolder  = parts[parts.length - 3];
+  const isTyped = /^t[yu]pe\s*\d+$/i.test(typeFolder);
+  const category = isTyped ? catFolder : typeFolder;
+  if (category && !acc.includes(category)) {
+    acc.push(category);
+  }
+  return acc;
+}, []);
+
+// كل الكاتيغوريات الموجودة في المتجر
+const ALL_CATEGORIES = dynamicCategories.sort();
+
 // الكاتيغوريات الأكثر بحثاً (trending)
-const TRENDING_SEARCHES = ["shoes", "bag", "hat", "sunglasses", "w-jeans"];
+const TRENDING_SEARCHES = ALL_CATEGORIES.slice(0, 5);
 
 // Fuzzy search — بيلاقي حتى لو في غلطة إملائية
 function fuzzyMatch(query, target) {
@@ -179,7 +202,7 @@ const Navbar = ({ onAuthOpen }) => {
 
           {/* Desktop Center */}
           <div className="flex-1 hidden md:flex items-center justify-center space-x-3">
-            <Link to="/men" className="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors px-3 py-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+            {/* <Link to="/men" className="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors px-3 py-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
               Men
             </Link>
             <Link to="/women" className="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-pink-500 transition-colors px-3 py-1.5 rounded-full hover:bg-pink-50 dark:hover:bg-pink-900/20">
@@ -187,7 +210,7 @@ const Navbar = ({ onAuthOpen }) => {
             </Link>
             <Link to="/all-products" className="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors px-3 py-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
               All
-            </Link>
+            </Link> */}
 
             {/* ===== SEARCH DESKTOP ===== */}
             <div className="relative" ref={dropdownRef}>
@@ -401,11 +424,10 @@ const SearchDropdownContent = ({ query, suggestions, recentSearches, trendingSea
             <button
               type="button"
               onMouseDown={() => onSelect(s)}
-              className={`w-full text-left px-4 py-2.5 flex items-center gap-3 transition-colors text-sm ${
-                i === highlightedIdx
-                  ? 'bg-gray-100 dark:bg-gray-700 text-black dark:text-white'
-                  : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50'
-              }`}
+              className={`w-full text-left px-4 py-2.5 flex items-center gap-3 transition-colors text-sm ${i === highlightedIdx
+                ? 'bg-gray-100 dark:bg-gray-700 text-black dark:text-white'
+                : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                }`}
             >
               <FaSearch size={12} className="text-gray-400 flex-shrink-0" />
               <span className="capitalize">{s}</span>
@@ -434,9 +456,8 @@ const SearchDropdownContent = ({ query, suggestions, recentSearches, trendingSea
               key={r}
               type="button"
               onMouseDown={() => onSelect(r)}
-              className={`w-full text-left px-4 py-2 flex items-center gap-3 text-sm transition-colors ${
-                i === highlightedIdx ? 'bg-gray-100 dark:bg-gray-700' : 'hover:bg-gray-50 dark:hover:bg-gray-700/50'
-              } text-gray-700 dark:text-gray-200`}
+              className={`w-full text-left px-4 py-2 flex items-center gap-3 text-sm transition-colors ${i === highlightedIdx ? 'bg-gray-100 dark:bg-gray-700' : 'hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                } text-gray-700 dark:text-gray-200`}
             >
               <FaClock size={12} className="text-gray-400" />
               <span className="capitalize">{r}</span>
@@ -456,9 +477,8 @@ const SearchDropdownContent = ({ query, suggestions, recentSearches, trendingSea
           key={t}
           type="button"
           onMouseDown={() => onSelect(t)}
-          className={`w-full text-left px-4 py-2 flex items-center gap-3 text-sm transition-colors ${
-            i + recentSearches.length === highlightedIdx ? 'bg-gray-100 dark:bg-gray-700' : 'hover:bg-gray-50 dark:hover:bg-gray-700/50'
-          } text-gray-700 dark:text-gray-200`}
+          className={`w-full text-left px-4 py-2 flex items-center gap-3 text-sm transition-colors ${i + recentSearches.length === highlightedIdx ? 'bg-gray-100 dark:bg-gray-700' : 'hover:bg-gray-50 dark:hover:bg-gray-700/50'
+            } text-gray-700 dark:text-gray-200`}
         >
           <FaFire size={12} className="text-orange-400" />
           <span className="capitalize">{t}</span>

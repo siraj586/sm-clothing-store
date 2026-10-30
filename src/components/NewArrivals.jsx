@@ -15,7 +15,7 @@ const NewArrivals = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl font-bold tracking-tight dark:text-gray-100">New Arrivals</h2>
+          <h2 className="text-3xl font-bold tracking-tight dark:text-gray-100">new arrivals</h2>
           <motion.div
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
