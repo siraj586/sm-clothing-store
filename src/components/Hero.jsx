@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FaTruck, FaUndo, FaStar } from 'react-icons/fa';
-import heroImg from '../assets/all products/new Arrivals/photo-1556905055-8f358a7a47b2.jpeg';
+import heroImg from '../assets/all products/new arrivals/photo-1556905055-8f358a7a47b2.jpeg';
 import img2 from '../assets/all products/trending products/1.jpg';
 import img3 from '../assets/all products/trending products/2.jpeg';
 
