@@ -18,7 +18,7 @@ const Footer = () => {
               <li><a href="#" className="hover:text-white transition">T-Shirts</a></li>
               <li><a href="#" className="hover:text-white transition">Hoodies</a></li>
               <li><a href="#" className="hover:text-white transition">Jackets</a></li>
-              <li><a href="#" className="hover:text-white transition">new arrivals</a></li>
+              <li><a href="#" className="hover:text-white transition">New Arrivals</a></li>
               <li><a href="#" className="hover:text-white transition">Sale</a></li>
             </ul>
           </div>

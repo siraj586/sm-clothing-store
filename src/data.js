@@ -1,11 +1,11 @@
-import img1 from "./assets/all products/new arrivals/1.jpeg"
-import img2 from "./assets/all products/new arrivals/2.jpeg"
-import img3 from "./assets/all products/new arrivals/3.jpeg"
-import img4 from "./assets/all products/new arrivals/4.jpeg"
-import img5 from "./assets/all products/trending Products/1.jpg"
-import img6 from "./assets/all products/trending Products/2.jpeg"
-import img7 from "./assets/all products/trending Products/3.jpeg"
-import img8 from "./assets/all products/trending Products/4.jpeg"
+import img1 from "./assets/all products/new Arrivals/1.jpeg"
+import img2 from "./assets/all products/new Arrivals/2.jpeg"
+import img3 from "./assets/all products/new Arrivals/3.jpeg"
+import img4 from "./assets/all products/new Arrivals/4.jpeg"
+import img5 from "./assets/all products/trending products/1.jpg"
+import img6 from "./assets/all products/trending products/2.jpeg"
+import img7 from "./assets/all products/trending products/3.jpeg"
+import img8 from "./assets/all products/trending products/4.jpeg"
 
 // ===== مثال: القميص الكتان عنده 3 ألوان =====
 // import shirtBeige from "./assets/all products/summer/shirt-beige-linen.jpg";
